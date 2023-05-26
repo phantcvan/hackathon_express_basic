@@ -1,0 +1,40 @@
+.main_container{
+    width: 35%;
+    margin: 0 auto;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 5px 10px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+h4{
+    margin: 5px;
+}
+#content{
+    outline: none;
+    border: none;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.btnAdd{
+    border:none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.iconAdd{
+    font-size: 26px;
+    color:gray;
+    position: absolute;
+    right:30px
+}
+
+.section-note{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 5px 55px;
+
+}
