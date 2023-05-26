@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
 import "./note.css"
 
-const Notes = ({ content }) => {
-
-
+const Notes = ({ content,onDelete }) => {
+const handleDelete=()=>{
+    onDelete()
+}
     return (
         <div className='container'>
             <div className='note-content'>
-                <p>{content}</p>
+                <p className='note-span'>{content}</p>
             </div>
-            <i className="fa-solid fa-trash icon-trash"></i>
+            <button className='btnDelete' onClick={handleDelete}>
+                <i className="fa-solid fa-trash icon-trash"></i>
+            </button>
         </div>
     )
 }
 
-export default Notes
+export default Notes;

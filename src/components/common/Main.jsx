@@ -5,37 +5,71 @@ import Note from './Notes';
 const Main = () => {
     const [content, setContent] = useState("");
     const [notes, setNotes] = useState([]);
+    const [loading, setLoading] = useState(false);
     const handleAdd = (e) => {
         setContent(e.target.value);
     };
 
     const handleClick = () => {
-        fetch("http://localhost:8000/api/v1/notes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ Content: content }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                setContent("");
+        if (!content) {
+            alert("Input Blank");
+            return;
+        } else if (content.length < 10) {
+            alert("Content at least 10 characters");
+            return;
+        } else {
+            fetch("http://localhost:8000/api/v1/notes", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ Content: content }),
             })
-            .catch((error) => {
-                console.log(error);
-            });
+                .then((response) => response.json())
+                .then((data) => {
+                    setContent("");
+                    setLoading(pre => !pre)
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+
     }
 
-    useEffect(() => {
+    const loadData = () => {
         fetch("http://localhost:8000/api/v1/notes")
             .then((res) => res.json())
             .then((data) => {
                 setNotes(data.notes);
-                console.log("data",data);
+                console.log("data", data);
             })
             .catch((err) => console.log(err))
-    }, [notes])
 
+    }
+    useEffect(() => {
+        loadData()
+    }, [loading]);
+
+    // Xoá note
+    const handleDeleteNote = (noteId) => {
+        fetch(`http://localhost:8000/api/v1/notes/${noteId}`, {
+            method: "DELETE",
+        })
+        .then((response) => {
+              console.log(response);
+            if (!response.ok) {
+              throw new Error("Failed to delete note");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setLoading(prevLoading => !prevLoading);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
     return (
         <>
             <div className="main_container">
@@ -49,7 +83,11 @@ const Main = () => {
             </div>
             <section className='section-note'>
                 {notes?.map((note) => (
-                    <Note key={note.Note_id} content={note.Content} />
+                    <Note 
+                    key={note.Note_id} 
+                    content={note.Content} 
+                    onDelete={() => handleDeleteNote(note.Note_id)}
+                    />
                 ))}
             </section>
         </>

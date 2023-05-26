@@ -6,10 +6,17 @@
     width: 30%;
     flex-wrap: wrap;
     position: relative;
+    display: flex;
+    height: 100px;
+}
+
+.note-span{
+    display: block;
 }
 
 .note-content{
     padding: 5px;
+    width: 100%;
     /* width: 30%; */
 }
 
@@ -18,4 +25,11 @@
     bottom: 5px;
     right: 10px;
     color: #F3B80D;
+}
+
+.btnDelete{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
 }
